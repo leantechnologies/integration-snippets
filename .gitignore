@@ -1,3 +1,4 @@
 *.crt
 *.pem
 *.cer
+webhook-examples/node-webhook-service/.DS_Store
