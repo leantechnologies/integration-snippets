@@ -10,7 +10,8 @@ import (
 )
 
 var (
-	certFile = flag.String("cert", "cert.crt", "Your application certificate provided by Lean")
+	// cert file MUST be a concatenation of certificate provided by Lean AND the certificate chain!!!
+	certFile = flag.String("cert", "cert_and_cert_chain.crt", "Your application certificate provided by Lean concatenated with cert chain")
 	keyFile  = flag.String("key", "key.pem", "Your private key attached to application certificate")
 	caFile   = flag.String("CA", "ca.pem", "Lean's public certificate chain")
 )
