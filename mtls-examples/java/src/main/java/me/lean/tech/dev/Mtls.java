@@ -15,11 +15,13 @@ public class Mtls {
 
     public static void main(String[] args) throws IOException {
         Properties props = new Properties();
-        props.load(Mtls.class.getClassLoader().getResourceAsStream("config.properties"));
+        props.load(Mtls.class.getClassLoader().getResourceAsStream("application.properties"));
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet("https://sandbox.leantech.me/banks/v1/");
+            String baseUrl = props.getProperty("lean.base.url");
+            String uri = baseUrl + "/banks/v1/";
+            HttpGet request = new HttpGet(uri);
             // add request headers
-            request.addHeader("lean-app-token", props.getProperty("app.token"));
+            request.addHeader("lean-app-token", props.getProperty("lean.app.token"));
             request.addHeader(HttpHeaders.ACCEPT, "application/json");
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 // Get HttpResponse Status
@@ -29,6 +31,8 @@ public class Mtls {
                     // return it as a String
                     String result = EntityUtils.toString(entity);
                     System.out.println(result);
+                } else {
+                    System.out.println("Unexpected error: unable to retrieve response");
                 }
 
             }
