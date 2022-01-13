@@ -11,11 +11,11 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Main {
+public class Mtls {
 
     public static void main(String[] args) throws IOException {
         Properties props = new Properties();
-        props.load(Main.class.getClassLoader().getResourceAsStream("config.properties"));
+        props.load(Mtls.class.getClassLoader().getResourceAsStream("config.properties"));
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet("https://sandbox.leantech.me/banks/v1/");
             // add request headers
