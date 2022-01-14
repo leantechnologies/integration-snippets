@@ -6,8 +6,15 @@ This project is written in java to access Lean API. It contains a simple http cl
 
 ## Requirements
 
-* Maven
+* Maven 3.6
 * Java 8 (minimum) [Tested with versions 1.8.282, 11.1, 17]
+
+## Build
+
+To build the project, run the following command inside the `java` folder
+   ```bash
+   mvn install
+   ```
 
 ## Usage
 
