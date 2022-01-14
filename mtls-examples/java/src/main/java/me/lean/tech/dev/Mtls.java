@@ -1,7 +1,5 @@
 package me.lean.tech.dev;
 
-import nl.altindag.sslcontext.SSLFactory;
-import nl.altindag.sslcontext.util.PemUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -11,7 +9,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -49,7 +46,7 @@ public class Mtls {
         // creating SSL context and passing in the p12 cert store and password
         SSLContext sslContext =
                 SSLContextBuilder.create().loadTrustMaterial(TrustAllStrategy.INSTANCE)
-                        .loadKeyMaterial(new ClassPathResource(props.getProperty("p12.filename")).getFile(),
+                        .loadKeyMaterial(Mtls.class.getClassLoader().getResource(props.getProperty("p12.filename")),
                                 props.getProperty("p12.passowrd").toCharArray(),
                                 props.getProperty("p12.passowrd").toCharArray())
                         .build();
