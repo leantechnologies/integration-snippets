@@ -2,13 +2,11 @@ package me.lean.tech.dev.springboot;
 
 import lombok.SneakyThrows;
 import me.lean.tech.dev.apacheclient.MtlsUsingApacheClient;
-import org.apache.http.HttpHost;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.boot.web.client.RestTemplateCustomizer;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -31,7 +29,7 @@ public class SSLCustomizer implements RestTemplateCustomizer {
     @SneakyThrows
     public void customize(RestTemplate restTemplate) {
         // creating SSL context and passing in the p12 cert store and password
-        var sslContext = buildSSLContextFromPKCS12();
+        SSLContext sslContext = buildSSLContextFromPKCS12();
         // creating a http client that uses our sslContext
         CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setSSLContext(sslContext)
@@ -43,22 +41,21 @@ public class SSLCustomizer implements RestTemplateCustomizer {
     }
 
     /**
-         * How to:
-         * - Create a p12 file from the certificates
-         * - Go to Lean's dev portal
-         * - Select "Integration" from the left side
-         * - Download the Certification Authority give it a name, ex: ca
-         * - Download the public/private keys zip file by clicking on "Download New Certificate"
-         * - Extract the zip file, rename the private key to key.pem, rename the public key to cert.crt
-         * - Copy all the certificates in a new folder, name it /certs
-         * - Run the following command, you will be asked to put on a password, please remember it
-         * ```bash
-         * openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
-         * ```
-         * - A new file will be generated called yourp12filename.p12, move it to the resources folder
-         * - Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
-         * - Run the main class, you should receive "HTTP/1.1 200" and a valid response in the console.
-         *
+     * How to:
+     * - Create a p12 file from the certificates
+     * - Go to Lean's dev portal
+     * - Select "Integration" from the left side
+     * - Download the Certification Authority give it a name, ex: ca
+     * - Download the public/private keys zip file by clicking on "Download New Certificate"
+     * - Extract the zip file, rename the private key to key.pem, rename the public key to cert.crt
+     * - Copy all the certificates in a new folder, name it /certs
+     * - Run the following command, you will be asked to put on a password, please remember it
+     * ```bash
+     * openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
+     * ```
+     * - A new file will be generated called yourp12filename.p12, move it to the resources folder
+     * - Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
+     * - Run the main class, you should receive "HTTP/1.1 200" and a valid response in the console.
      */
     private static SSLContext buildSSLContextFromPKCS12() throws NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, CertificateException, IOException, KeyManagementException {
         Properties props = new Properties();

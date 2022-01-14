@@ -20,7 +20,7 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
         log.info("Request body: {}", new String(requestBody, StandardCharsets.UTF_8));
         ClientHttpResponse response = execution.execute(request, requestBody);
         // You must use BufferingClientHttpRequestFactory in rest template to be able to re-read response body as stream can be consumed only once.
-        var bodyString = StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8);
+        String bodyString = StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8);
         log.info("Response body: {}", bodyString);
         return response;
     }
