@@ -61,6 +61,7 @@ If all went well, you should be able to run the main class and receive "HTTP/1.1
 Exception in thread "main" java.security.KeyStoreException: Key protection  algorithm not found: java.security.UnrecoverableKeyException: Encrypt Private Key failed: unrecognized algorithm name: PBEWithSHA1AndDESede
 ```
 Check if are using a version of Java that contains this issue: 1.8.292. If yes, consider using a different version. You can find additional info [here](https://bugs.openjdk.java.net/browse/JDK-8266279).
+
 2. If you encounter an error such as:
 ```
 java.security.NoSuchAlgorithmException: TLSv1.3 SSLContext not available
