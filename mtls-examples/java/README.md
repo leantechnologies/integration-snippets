@@ -24,7 +24,7 @@ If you want to run this template, you will need a set of credentials from Lean T
          1. Again, download the file and unzip it.
 
 At this point, there are two options:
-1. Create the `keystore` required to make a secure connection in memory:
+1. Create the `keystore` required to make a secure connection in memory (`src/main/java/me/lean/tech/dev/apacheclient/MtlsUsingApacheClient.java`):
    1. In the [application.properties](src/main/resources/application.properties),
       1. replace the path of certificates `<ABSOLUTE_FOLDER_PATH_WHERE_CERTIFICATES_ARE_STORED>` with the absolute path of `certs` folder
       2. replace the mock certificates filenames:
@@ -34,16 +34,16 @@ At this point, there are two options:
       3. Now time to set the `app token`, needed when making any call to Lean API. On the same ´Integration´ tab, on the menu on the left:
          1. go the ´Application´ section and copy the ´App token´.
          2. replace the value of `lean.api.token` in [application.properties](src/main/resources/application.properties) (`<LEAN_APP_TOKEN>`) with your `App token`)
-2. Create the `keystore` required to make a secure connection in a file using [openssl](https://www.openssl.org/):
+2. Create the `keystore` required to make a secure connection in a file using [openssl](https://www.openssl.org/) (`src/main/java/me/lean/tech/dev/springboot/MtlsUsingRestTemplate.java`):
    1. Run the following command, you will be asked to put on a password, please remember it
    ```bash
    openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
    ```
-   2. A new file will be generated called yourp12filename.p12, move it to the resources folder
-   3. Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
+   2. A new file will be generated called `yourp12filename.p12`, move it to the resources folder
+   3. Replace the "`p12.filename`", "`p12.password`", "`app.token`" dummy properties with your own.
 
-If all went well, you should be able to run the main class and receive "HTTP/1.1 200" and a valid response in the console.
+If all went well, you should be able to run the main class and receive "HTTP/1.1 200" and a valid response in the console:
    ```bash
-   openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
+   HTTP/1.1 200
+   [{"id":13,"identifier":"FAB_UAE","name":"First Abu Dhabi Bank","logo"...
    ```
-
