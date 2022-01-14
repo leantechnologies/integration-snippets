@@ -45,7 +45,14 @@ public class Mtls {
         Path publicKeyPath = Paths.get(certificatePath, publicKeyName);
 
         KeyStore keyStore = createKeyStoreUsingHelperLib(crtCertificatePath, privateKeyPath, publicKeyPath);
-        callUsingApacheClient(keyStore, props);
+        SSLContext sslContext = buildSSLContext(keyStore);
+        callUsingApacheClient(sslContext, props);
+
+        callUsingRestTemplate(sslContext, props);
+    }
+
+    private static void callUsingRestTemplate(SSLContext sslContext, Properties props) {
+
     }
 
 //    private static KeyStore createKeyStoreUsingOpenSSL(Path certificatePath, Path clientCrtCertificate, Path privateKeyPem, Path publicKeyPem) throws ConfigurationException, GeneralSecurityException, IOException {
@@ -71,14 +78,7 @@ public class Mtls {
         return keyStore;
     }
 
-    private static void callUsingApacheClient(KeyStore keyStore, Properties props) throws IOException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        SSLContext sslContext =
-                SSLContextBuilder.create()
-                        .loadKeyMaterial(keyStore, KEY_PASSWORD.toCharArray())
-                        .loadTrustMaterial(new TrustAllStrategy())
-                        .setProtocol("TLSv1.3")
-                        .build();
-
+    private static void callUsingApacheClient( SSLContext sslContext, Properties props) throws IOException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create().setSSLContext(sslContext);
 
         try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
@@ -101,5 +101,13 @@ public class Mtls {
                 }
             }
         }
+    }
+
+    private static SSLContext buildSSLContext(KeyStore keyStore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+        return SSLContextBuilder.create()
+                        .loadKeyMaterial(keyStore, KEY_PASSWORD.toCharArray())
+                        .loadTrustMaterial(new TrustAllStrategy())
+                        .setProtocol("TLSv1.3")
+                        .build();
     }
 }

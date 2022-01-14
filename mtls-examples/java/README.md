@@ -7,11 +7,11 @@ This project is a java template to access Lean API. It contains a simple http cl
 ## Requirements
 
 * Maven
-* Java 7
+* Java 7 (minimum)
 
 ## Usage
 
-If you want to run this template, you will a set of credentials from Lean Technologies.
+If you want to run this template, you will need a set of credentials from Lean Technologies.
 1. Head to [dev.leantech.me](https://dev.leantech.me) and create an account (if you have not done it yet). This will give you access to Lean sandbox API.
 2. Once you are ready, reach out to [devsupport@leantech.me](mailto:devsupport@leantech.me) to ask access to the production environment.
 3. Once you have production access:
