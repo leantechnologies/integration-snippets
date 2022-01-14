@@ -17,18 +17,33 @@ If you want to run this template, you will need a set of credentials from Lean T
 3. Once you have production access:
    1. Log in to [dev.leantech.me](https://dev.leantech.me)
    2. Go to `Integration` tab, on the left hand side menu:
-      1. On the `Certificates` section, click on `Generate new certificate`, which will prompt you to save the a zip file on your local computer.
+      1. On the `Certificates` section, click on `Generate new certificate`, which will prompt you to save them. Do it in a new folder, name it `/certificates`.
          1. Unzip the download file, which should contain 2 files (one with `crt` and other with `pem` extensions)
          2. Remember where these are downloaded as they will be needed for the next step.
       2. Still on `Certificates` section, `Download` the `Certificate chain`
          1. Again, download the file and unzip it.
-      3. In the [application.properties](src/main/resources/application.properties), either
-         1. replace the path of certificates and keys
-         2. or replace the mock certificates and keys under `src/main/resources/certificates`.
-            1. Note: Make sure the certificates' filenames match to the ones expected in [application.properties](src/main/resources/application.properties)
-   4. Now time to set the `app token`, needed when making any call to Lean API. On the same ´Integration´ tab, on the menu on the left:
-      1. go the ´Application´ section and copy the ´App token´.
-      2. replace the value of `lean.api.token` in [application.properties](src/main/resources/application.properties) (by default `<add-your-own-token-here>`) with your `App token`)
 
+At this point, there are two options:
+1. Create the `keystore` required to make a secure connection in memory:
+   1. In the [application.properties](src/main/resources/application.properties),
+      1. replace the path of certificates `<ABSOLUTE_FOLDER_PATH_WHERE_CERTIFICATES_ARE_STORED>` with the absolute path of `certs` folder
+      2. replace the mock certificates filenames:
+         1. `lean.certificate.name` is the filename ending with `crt`
+         2. `lean.private.key.name` is the filename ending with `pem` that is private
+         3. `lean.public.key.name` is the filename ending with `pem` that is public
+      3. Now time to set the `app token`, needed when making any call to Lean API. On the same ´Integration´ tab, on the menu on the left:
+         1. go the ´Application´ section and copy the ´App token´.
+         2. replace the value of `lean.api.token` in [application.properties](src/main/resources/application.properties) (`<LEAN_APP_TOKEN>`) with your `App token`)
+2. Create the `keystore` required to make a secure connection in a file using [openssl](https://www.openssl.org/):
+   1. Run the following command, you will be asked to put on a password, please remember it
+   ```bash
+   openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
+   ```
+   2. A new file will be generated called yourp12filename.p12, move it to the resources folder
+   3. Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
 
-If you need access to the Lean API from a service that is not written in Java, consider looking at [integration-snippets](https://github.com/leantechnologies/integration-snippets)
+If all went well, you should be able to run the main class and receive "HTTP/1.1 200" and a valid response in the console.
+   ```bash
+   openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
+   ```
+
