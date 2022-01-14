@@ -1,12 +1,11 @@
 package me.leantech.dev.springboot;
 
 import lombok.SneakyThrows;
-import me.lean.tech.dev.apacheclient.MtlsUsingApacheClient;
-import me.leantech.dev.apacheclient.MtlsUsingApacheClient;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -22,9 +21,16 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.Properties;
+
 
 public class SSLCustomizer implements RestTemplateCustomizer {
+
+    @Value("${p12.filename}")
+    private String p12FileName;
+    @Value("${p12.password}")
+    private String p12FilePassword;
+    @Value("${certificates.path}")
+    private String certificatesPath;
 
     @Override
     @SneakyThrows
@@ -58,14 +64,8 @@ public class SSLCustomizer implements RestTemplateCustomizer {
      * - Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
      * - Run the main class, you should receive "HTTP/1.1 200" and a valid response in the console.
      */
-    private static SSLContext buildSSLContextFromPKCS12() throws NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, CertificateException, IOException, KeyManagementException {
-        Properties props = new Properties();
-        props.load(MtlsUsingApacheClient.class.getClassLoader().getResourceAsStream("application.properties"));
-
-        // creating SSL context and passing in the p12 cert store and password
-        String p12FileName = props.getProperty("p12.filename");
-        String p12FilePassword = props.getProperty("p12.password");
-        File p12File = Paths.get(props.getProperty("certificates.path"), p12FileName).toFile();
+    private SSLContext buildSSLContextFromPKCS12() throws NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, CertificateException, IOException, KeyManagementException {
+        File p12File = Paths.get(certificatesPath, p12FileName).toFile();
 
         return SSLContextBuilder.create()
                 .loadTrustMaterial(TrustAllStrategy.INSTANCE)

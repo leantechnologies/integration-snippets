@@ -17,6 +17,7 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.Properties;
 
 @Slf4j
 @SpringBootApplication
@@ -25,9 +26,9 @@ public class MtlsUsingRestTemplate implements CommandLineRunner {
     @Autowired
     private RestTemplate template;
 
-    @Value("base.url")
+    @Value("${base.url}")
     private String baseUrl;
-    @Value("app.token")
+    @Value("${app.token}")
     private String appToken;
 
     public static void main(String[] args) {
@@ -36,10 +37,14 @@ public class MtlsUsingRestTemplate implements CommandLineRunner {
 
     // Instantiating and injecting restTemplate (our http client)
     @Bean
-    RestTemplate restTemplate(RestTemplateBuilder preconfiguredBuilder) {
+    RestTemplate restTemplate(RestTemplateBuilder preconfiguredBuilder) throws IOException {
+        //This is needed because the baseUrl is not available when this bean is initialised
+        Properties props = new Properties();
+        props.load(MtlsUsingRestTemplate.class.getClassLoader().getResourceAsStream("application.properties"));
+
         return preconfiguredBuilder
                 .additionalInterceptors(new LoggingInterceptor())
-                .rootUri(baseUrl)
+                .rootUri(props.getProperty("base.url"))
                 .errorHandler(new RestErrorHandler())
                 .requestFactory(() -> new BufferingClientHttpRequestFactory(preconfiguredBuilder.buildRequestFactory()))
                 .build();
@@ -56,6 +61,7 @@ public class MtlsUsingRestTemplate implements CommandLineRunner {
         log.info("Starting");
         getBanks();
         log.info("Finished");
+        System.exit(0);
     }
 
     // method to call the banks endpoint
