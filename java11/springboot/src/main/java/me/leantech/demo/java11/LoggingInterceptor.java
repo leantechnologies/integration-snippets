@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
+// Class used to log requests and responses to output
 public class LoggingInterceptor implements ClientHttpRequestInterceptor {
 
     @Override

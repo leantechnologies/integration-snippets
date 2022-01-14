@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>me.leantech.re</groupId>
-    <artifactId>re-poc</artifactId>
+    <groupId>me.leantech.demo</groupId>
+    <artifactId>demo-poc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>re-poc</name>
+    <name>demo-poc</name>
 
     <description>Demo project for Spring Boot</description>
 

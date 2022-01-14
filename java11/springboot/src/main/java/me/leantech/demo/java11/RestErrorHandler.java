@@ -13,6 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+// Class to handle http client error
 class RestErrorHandler extends DefaultResponseErrorHandler {
 
     @Autowired
