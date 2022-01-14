@@ -40,7 +40,7 @@ At this point, there are two options:
    openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
    ```
    2. A new file will be generated called `yourp12filename.p12`, move it to the resources folder
-   3. Replace the "`p12.filename`", "`p12.password`", "`app.token`" dummy properties with your own.
+   3. Replace the "`<KEYSTORE_PKCS12_FILENAME>`", "`<KEYSTORE_PKCS12_PASSWORD>`", "`<LEAN_APP_TOKEN>`" dummy properties with your own.
 
 If all went well, you should be able to run the main class and receive "HTTP/1.1 200" and a valid response in the console:
    ```bash
