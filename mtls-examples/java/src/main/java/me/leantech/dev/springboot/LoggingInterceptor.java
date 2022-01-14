@@ -1,4 +1,4 @@
-package me.lean.tech.dev.springboot;
+package me.leantech.dev.springboot;
 
 
 import lombok.extern.slf4j.Slf4j;

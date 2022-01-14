@@ -1,5 +1,6 @@
-package me.lean.tech.dev.apacheclient;
+package me.leantech.dev.apacheclient;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.altindag.ssl.util.CertificateUtils;
 import nl.altindag.ssl.util.PemUtils;
 import org.apache.http.HttpEntity;
@@ -27,6 +28,7 @@ import java.security.cert.Certificate;
 import java.util.List;
 import java.util.Properties;
 
+@Slf4j
 public class MtlsUsingApacheClient {
 
     //TODO: change this passsword
@@ -55,6 +57,8 @@ public class MtlsUsingApacheClient {
         PrivateKey privateKey = PemUtils.loadPrivateKey(privateKeyPem);
 
         KeyStore keyStore = KeyStore.getInstance("pkcs12");
+        // To use a keystore, it needs to be initialised.
+        // In this case, initialising an empty one, without (null) password
         keyStore.load(null, null);
         keyStore.setKeyEntry("client-key", privateKey, KEY_PASSWORD.toCharArray(), certificates.toArray(new Certificate[3]));
 
@@ -65,22 +69,21 @@ public class MtlsUsingApacheClient {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create().setSSLContext(sslContext);
 
         try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-            String baseUrl = props.getProperty("base.url");
-            String uri = baseUrl + "/banks/v1/";
+            String uri = props.getProperty("base.url") + "/banks/v1/";
             HttpGet request = new HttpGet(uri);
             // add request headers
             request.addHeader("lean-app-token", props.getProperty("app.token"));
             request.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 // Get HttpResponse Status
-                System.out.println(response.getStatusLine().toString()); // HTTP/1.1 200 OK
+                log.info(response.getStatusLine().toString()); // HTTP/1.1 200 OK
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     // return it as a String
                     String result = EntityUtils.toString(entity);
-                    System.out.println(result);
+                    log.info(result);
                 } else {
-                    System.out.println("Unexpected error: unable to retrieve response");
+                    log.error("Unexpected error: unable to retrieve response");
                 }
             }
         }

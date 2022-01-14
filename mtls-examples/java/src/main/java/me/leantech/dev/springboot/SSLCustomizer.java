@@ -1,7 +1,8 @@
-package me.lean.tech.dev.springboot;
+package me.leantech.dev.springboot;
 
 import lombok.SneakyThrows;
 import me.lean.tech.dev.apacheclient.MtlsUsingApacheClient;
+import me.leantech.dev.apacheclient.MtlsUsingApacheClient;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
