@@ -7,7 +7,7 @@ This project is a java template to access Lean API. It contains a simple http cl
 ## Requirements
 
 * Maven
-* Java 7 (minimum)
+* Java 8 (minimum)
 
 ## Usage
 
