@@ -1,5 +1,5 @@
 
-# Lean-dev-client-template
+# Lean-dev-client-poc
 
 This project is written in java to access Lean API. It contains a simple http client and a spring boot application that load the required certificates
 (available in [dev.leantech.me](https://dev.leantech.me)) to make a call to Lean API.
