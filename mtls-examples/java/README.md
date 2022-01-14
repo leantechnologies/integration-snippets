@@ -24,7 +24,7 @@ If you want to run this template, you will need a set of credentials from Lean T
          1. Again, download the file and unzip it.
 
 At this point, there are two options:
-1. Create the `keystore` required to make a secure connection in memory (`src/main/java/me/lean/tech/dev/apacheclient/MtlsUsingApacheClient.java`):
+1. Create the `keystore` required to make a secure connection in memory (`src/main/java/me/lean/tech/dev/apacheclient/MtlsUsingApacheClient.java`), using a [helper library](https://github.com/Hakky54/sslcontext-kickstart) to read lean certificates:
    1. In the [application.properties](src/main/resources/application.properties),
       1. replace the path of certificates `<ABSOLUTE_FOLDER_PATH_WHERE_CERTIFICATES_ARE_STORED>` with the absolute path of `certs` folder
       2. replace the mock certificates filenames:
