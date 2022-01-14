@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>7</maven.compiler.source>
-        <maven.compiler.target>7</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -18,6 +18,16 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
+            <artifactId>sslcontext-kickstart</artifactId>
+            <version>7.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
+            <artifactId>sslcontext-kickstart-for-pem</artifactId>
+            <version>7.2.0</version>
         </dependency>
     </dependencies>
 
