@@ -45,9 +45,7 @@ public class Mtls {
         Path publicKeyPath = Paths.get(certificatePath, publicKeyName);
 
         KeyStore keyStore = createKeyStoreUsingHelperLib(crtCertificatePath, privateKeyPath, publicKeyPath);
-        call(keyStore, props);
-
-
+        callUsingApacheClient(keyStore, props);
     }
 
 //    private static KeyStore createKeyStoreUsingOpenSSL(Path certificatePath, Path clientCrtCertificate, Path privateKeyPem, Path publicKeyPem) throws ConfigurationException, GeneralSecurityException, IOException {
@@ -73,7 +71,7 @@ public class Mtls {
         return keyStore;
     }
 
-    private static void call(KeyStore keyStore, Properties props) throws IOException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    private static void callUsingApacheClient(KeyStore keyStore, Properties props) throws IOException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         SSLContext sslContext =
                 SSLContextBuilder.create()
                         .loadKeyMaterial(keyStore, KEY_PASSWORD.toCharArray())
