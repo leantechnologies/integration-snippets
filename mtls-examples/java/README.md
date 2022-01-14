@@ -8,7 +8,7 @@
 - Copy all the certificates in a new folder, name it /certs
 - Run the following command, you will be asked to put on a password, please remember it
 ```bash
-     * openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
+openssl pkcs12 -export -in cert.crt  -inkey key.pem  -certfile ca.pem -out yourp12filename.p12
 ```
 - A new file will be generated called yourp12filename.p12, move it to the resources folder
 - Replace the "p12.filename", "p12.password", "app.token" dummy properties with your own.
