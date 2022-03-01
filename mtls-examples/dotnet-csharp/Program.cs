@@ -23,11 +23,11 @@ namespace HTTP_Test
     {
       // path of pfx file generate by 
       // $ openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CAcert 
-      var certificateLocation = "/app/lean.pfx";
+      var certificateLocation = "";
       // password of pfx file
-      var certificatePassword = "123456";
+      var certificatePassword = "";
       // lean app token
-      var leanAppToken = "d20d0e48-5887-4eb7-9d9d-fe5d459d79d8";
+      var leanAppToken = "";
       // create a new HttpClientHandler
       var handler = new HttpClientHandler();
       // create a new certficite using location and password
