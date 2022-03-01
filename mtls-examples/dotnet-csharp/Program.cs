@@ -1,3 +1,7 @@
+/*
+  Please make sure the system running this code has lean root certificate installed in system or user store for more info please read this
+*/
+
 using System.Security.Cryptography.X509Certificates;
 
 namespace HTTP_Test
