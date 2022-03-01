@@ -2,6 +2,9 @@
   Please make sure the system running this code has lean root certificate installed in system or user store for more info please read this
 */
 
+using System;
+using System.Threading.Tasks;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 
 namespace HTTP_Test
@@ -20,17 +23,19 @@ namespace HTTP_Test
     {
       // path of pfx file generate by 
       // $ openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CAcert 
-      var certificateLocation = "";
+      var certificateLocation = "/app/lean.pfx";
       // password of pfx file
-      var certificatePassword = "";
+      var certificatePassword = "123456";
       // lean app token
-      var leanAppToken = "";
+      var leanAppToken = "d20d0e48-5887-4eb7-9d9d-fe5d459d79d8";
       // create a new HttpClientHandler
       var handler = new HttpClientHandler();
       // create a new certficite using location and password
       var certificate = new X509Certificate2(certificateLocation, certificatePassword);
       // add certificate to client certificates
       handler.ClientCertificates.Add(certificate);
+      // ignore server checks (Caution: You should implement a check to confirm server certificate)
+      handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
       // create a new HttpClient using the handler and setting the default BaseAddress as https://api.leantech.me/
       var client = new HttpClient(handler)
       {
