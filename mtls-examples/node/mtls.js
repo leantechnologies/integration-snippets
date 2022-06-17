@@ -14,18 +14,18 @@ const httpsAgent = new https.Agent({
 const start = async () => {
   try {
     const request = await axios({
-      method: 'post',
+      method: 'get',
       headers: {
-        'lean-app-token': 'LEAN_APP_TOKEN',
+        'lean-app-token': '<LEAN_APP_TOKEN>',
       },
       httpsAgent,
       // You can change the end point per your need. This endpoint is good for
       // testing mTLS
-      url: 'https://api.leantech.me/customers/v1',
+      url: 'https://api.leantech.me/banks/v1',
       withCredentials: true,
       jar: true,
     })
-    console.log(request)
+    console.log(request.data)
   } catch (error) {
     console.log(error)
   }
