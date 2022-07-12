@@ -1,15 +1,14 @@
-import json
 import requests
 
 getBanksUrl = 'https://api.leantech.me/banks/v1/'
 
-headers = {'lean-app-token': '1120c888-67d3-446d-b2aa-b360c166db0e', 'Content-Type': 'application/json'}
+headers = {'lean-app-token': '<LEAN_APP_TOKEN>', 'Content-Type': 'application/json'}
 
 result = requests.get(
     getBanksUrl,
     headers=headers,
-    cert=('your_apps.crt', 'your_apps.pem'), # Use the path to your own certificate and private key here
-    verify='lean_certificate_chain.pem'
+    cert=('cert.crt', 'key.pem'), # Use the path to your own certificate and private key here
+    verify='ca.pem'
     )
 
 if (result.status_code == 200) :
