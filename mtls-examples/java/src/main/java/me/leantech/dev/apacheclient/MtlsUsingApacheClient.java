@@ -60,7 +60,7 @@ public class MtlsUsingApacheClient {
         // To use a keystore, it needs to be initialised.
         // In this case, initialising an empty one, without (null) password
         keyStore.load(null, null);
-        keyStore.setKeyEntry("client-key", privateKey, KEY_PASSWORD.toCharArray(), certificates.toArray(new Certificate[3]));
+        keyStore.setKeyEntry("client-key", privateKey, KEY_PASSWORD.toCharArray(), certificates.subList(0, 3).toArray(new Certificate[3]));
 
         return keyStore;
     }
